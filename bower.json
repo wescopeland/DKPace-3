@@ -1,0 +1,23 @@
+{
+  "name": "DKPace",
+  "version": "3.0.0",
+  "authors": [
+    "Wes Copeland <wlcopeland1@gmail.com>"
+  ],
+  "description": "Donkey Kong Pace Calculator",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.15",
+    "angular-fcsa-number": "~1.5.3",
+    "animate.css": "~3.2.5",
+    "materialize": "~0.95.3"
+  }
+}

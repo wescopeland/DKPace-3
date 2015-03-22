@@ -1,0 +1,53 @@
+{
+    "webexe_settings": {
+        "linux-x32": false, 
+        "windows-x64": true, 
+        "download_dir": "/Users/wescopeland/Downloads/Web2Executable.app/Contents/Resources/files/downloads", 
+        "nw_compression_level": 5, 
+        "mac-x32": false, 
+        "windows-x32": false, 
+        "mac-x64": true, 
+        "nw_version": "0.12.0-rc1", 
+        "force_download": false, 
+        "linux-x64": false
+    }, 
+    "js-flags": "", 
+    "name": "DKPace", 
+    "single-instance": true, 
+    "nodejs": true, 
+    "description": "", 
+    "additional_trust_anchors": "", 
+    "user-agent": "", 
+    "inject-js-end": "", 
+    "keywords": [], 
+    "window": {
+        "fullscreen": false, 
+        "resizable": false, 
+        "title": "DKPace", 
+        "always-on-top": false, 
+        "frame": true, 
+        "visible": true, 
+        "height": 760, 
+        "exe_icon": "", 
+        "width": 250, 
+        "as_desktop": false, 
+        "position": "", 
+        "show_in_taskbar": true, 
+        "mac_icon": "", 
+        "transparent": false, 
+        "toolbar": false, 
+        "icon": ""
+    }, 
+    "version": "1.0.0", 
+    "snapshot": "", 
+    "node-main": "", 
+    "webkit": {
+        "page-cache": false, 
+        "java": false, 
+        "plugin": false
+    }, 
+    "inject-js-start": "", 
+    "node-remote": "", 
+    "main": "index.html", 
+    "chromium-args": ""
+}

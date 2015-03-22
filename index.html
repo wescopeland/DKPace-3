@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="DKPace">
+
+	<head>
+		<!-- Materialize CSS -->
+		<link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css" media="screen,projection">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<!-- Animate.css -->
+		<link rel="stylesheet" href="bower_components/animate.css/animate.min.css">
+
+		<!-- App CSS -->
+		<link rel="stylesheet" href="dkpace.css">
+	</head>
+
+	<body class="grey darken-4 calculator" ng-controller="Calculator as calculator" ng-init="calculator.setInitialVariables()">
+
+		<!-- Display Fields -->
+		<ul class="collection">
+			<li class="collection-item">
+				<span class="item-header">Start (L1 &ndash; L4)</span>
+				<span id="startDisplay" class="item-content">{{ (calculator.start | number) || "-" }}</span>
+			</li>
+
+			<li class="collection-item">
+				<span class="item-header">Level Average (L5 &ndash; L21)</span>
+				<span id="levelAverageDisplay" 
+				      class="item-content"
+				      ng-class="{ 'less-than-needed': calculator.levelAverage && calculator.levelAverage < calculator.neededAverage,
+				                  'more-than-needed': calculator.levelAverage && calculator.levelAverage > calculator.neededAverage,
+				                  'needed-value': calculator.levelAverage && calculator.levelAverage === calculator.neededAverage }">
+				    {{ (calculator.levelAverage | number) || "-" }}
+				</span>
+			</li>
+
+			<li class="collection-item">
+				<span class="item-header">Needed Average For Goal</span>
+				<span id="neededAverageDisplay" class="item-content">{{ (calculator.neededAverage | number) || "-" }}</span>
+			</li>
+
+			<li class="collection-item">
+				<span class="item-header">Previous Level</span>
+				<span id="previousLevelDisplay" class="item-content">{{ (calculator.previousLevel | number) || "-" }}</span>
+			</li>
+
+			<li class="collection-item">
+				<span class="item-header">Projected L22 Final Score</span>
+				<span id="projectionDisplay" 
+				      class="item-content"
+				      ng-class="{ 'less-than-needed': calculator.projectedFinal && calculator.projectedFinal < calculator.inputGoal,
+				                  'more-than-needed': calculator.projectedFinal && calculator.projectedFinal > calculator.inputGoal,
+				                  'needed-value': calculator.projectedFinal && calculator.projectedFinal === calculator.inputGoal }">
+				    {{ (calculator.projectedFinal | number) || "-" }}
+				</span>
+			</li>
+
+			<li class="collection-item">
+				<span class="item-header">Goal</span>
+				<span id="goalDisplay" class="item-content">{{ calculator.inputGoal | number }}</span>
+			</li>
+		</ul>
+
+		<!-- Score and Goal Input  -->
+		<div class="row">
+			<form class="col s12">
+				<div class="row" style="margin-bottom: 0">
+					<div class="input-field col s12">
+						<input id="inputScore" 
+						       type="text" 
+						       ng-model="calculator.inputScore"
+						       ng-keyup="$event.keyCode === 13 ? calculator.submitScore() : null">
+						<label for="inputScore">{{ calculator.inputScoreLabel }}</label>
+					</div>
+				</div>
+				<div class="row" style="margin-bottom: 10px;">
+					<div class="input-field col s12">
+						<input id="inputGoal" type="text" ng-model="calculator.inputGoal" fcsa-number>
+						<label for="inputGoal">Input Goal</label>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<!-- Calculator Buttons -->
+		<div class="row">
+			<div class="col s12">
+				<div class="row">
+					<div class="col s3">
+						<a class="green darken-1 btn-floating waves-effect waves-light z-depth-2" ng-click="calculator.submitScore()">
+						    <i class="mdi-action-done"></i>
+						</a>
+					</div>
+					<div class="col s3">
+						<a class="red darken-1 btn-floating waves-effect waves-light z-depth-2">
+						    <i class="mdi-content-undo"></i>
+						</a>
+					</div>
+					<div class="col s3">
+						<a class="blue darken-1 btn-floating waves-effect waves-light z-depth-2" ng-click="calculator.resetCalculator()">
+						    <i class="mdi-navigation-refresh"></i>
+						</a>
+					</div>
+					<div class="col s3">
+						<a class="deep-purple darken-1 btn-floating waves-effect waves-light z-depth-2">
+						    <i class="mdi-action-settings"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Library Dependencies -->
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/materialize/dist/js/materialize.min.js"></script>
+		<script src="bower_components/angular/angular.min.js"></script>
+		<script src="bower_components/angular-fcsa-number/src/fcsaNumber.min.js"></script>
+
+		<!-- App Dependencies -->
+		<script src="app/DKPace.module.js"></script>
+		<script src="app/calculator/calculator.controller.js"></script>
+		<script src="app/calculator/calculator.service.js"></script>
+
+	</body>
+
+</html>

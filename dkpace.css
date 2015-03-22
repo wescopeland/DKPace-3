@@ -1,0 +1,69 @@
+.calculator .collection {
+	border-left: none; 
+	border-right: none; 
+	border-color: #f5f5f5
+}
+
+.calculator .collection-item {
+	background-color: #212121;
+}
+
+.calculator .item-header {
+	color: #9e9e9e;
+	font-weight: 700;
+	display: inline;
+}
+
+.calculator .item-header:after {
+	content: "\a";
+	white-space: pre;
+}
+
+.calculator .item-content {
+	color: #ffffff;
+}
+
+.less-than-needed {
+	color: #f44336 !important;
+}
+
+.more-than-needed {
+	color: #00e676 !important;
+}
+
+.needed-value {
+	color: inherit;
+}
+
+/* Input Field */
+/* label color */
+.input-field label {
+	color: #fff;
+}
+input[type=text] {
+	color: #fff;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+	color: #fff;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+	color: white;
+	border-bottom: 1px solid #fff;
+	box-shadow: 0 1px 0 0 #fff;
+}
+/* valid color */
+.input-field input[type=text].valid {
+	border-bottom: 1px solid #000;
+	box-shadow: 0 1px 0 0 #000;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+	border-bottom: 1px solid #000;
+	box-shadow: 0 1px 0 0 #000;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+	color: #000;
+}
