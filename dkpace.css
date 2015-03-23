@@ -1,6 +1,8 @@
 .calculator .collection {
 	border-left: none; 
 	border-right: none; 
+	border-top: none;
+	border-bottom: none;
 	border-color: #f5f5f5
 }
 

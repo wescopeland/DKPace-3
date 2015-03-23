@@ -17,7 +17,7 @@
 
 		<!-- Display Fields -->
 		<ul class="collection">
-			<li class="collection-item">
+			<li class="collection-item" style="border-top: none;">
 				<span class="item-header">Start (L1 &ndash; L4)</span>
 				<span id="startDisplay" class="item-content">{{ (calculator.start | number) || "-" }}</span>
 			</li>
@@ -60,6 +60,8 @@
 			</li>
 		</ul>
 
+		<br>
+
 		<!-- Score and Goal Input  -->
 		<div class="row">
 			<form class="col s12">
@@ -85,24 +87,14 @@
 		<div class="row">
 			<div class="col s12">
 				<div class="row">
-					<div class="col s3">
+					<div class="col s6" style="text-align: center;">
 						<a class="green darken-1 btn-floating waves-effect waves-light z-depth-2" ng-click="calculator.submitScore()">
 						    <i class="mdi-action-done"></i>
 						</a>
 					</div>
-					<div class="col s3">
-						<a class="red darken-1 btn-floating waves-effect waves-light z-depth-2">
-						    <i class="mdi-content-undo"></i>
-						</a>
-					</div>
-					<div class="col s3">
+					<div class="col s6" style="text-align: center;">
 						<a class="blue darken-1 btn-floating waves-effect waves-light z-depth-2" ng-click="calculator.resetCalculator()">
 						    <i class="mdi-navigation-refresh"></i>
-						</a>
-					</div>
-					<div class="col s3">
-						<a class="deep-purple darken-1 btn-floating waves-effect waves-light z-depth-2">
-						    <i class="mdi-action-settings"></i>
 						</a>
 					</div>
 				</div>
