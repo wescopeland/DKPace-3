@@ -24,76 +24,77 @@
 
         function refreshView() {
 
-        	// Update all UI-facing variables based on what is living inside our service.
-        	if (calculatorService.isStart()) {
+            // Update all UI-facing variables based on what is living inside our service.
+            if (calculatorService.isStart()) {
 
-        		vm.start = calculatorService.getStart();
-        		angular.element('#startDisplay').addClass('animated rubberBand');
+                vm.start = calculatorService.getStart();
+                angular.element('#startDisplay').addClass('animated rubberBand');
 
-        		vm.neededAverage = calculatorService.getNeededAverage();
-        		angular.element('#neededAverageDisplay').addClass('animated rubberBand');
+                vm.neededAverage = calculatorService.getNeededAverage();
+                angular.element('#neededAverageDisplay').addClass('animated rubberBand');
 
-        		vm.inputScoreLabel = 'Input Score';
+            } else {
 
-        	} else {
+                vm.neededAverage = calculatorService.getNeededAverage();
+                angular.element('#neededAverageDisplay').addClass('animated rubberBand');
 
-        		vm.neededAverage = calculatorService.getNeededAverage();
-        		angular.element('#neededAverageDisplay').addClass('animated rubberBand');
+                vm.projectedFinal = calculatorService.getProjection();
+                angular.element('#projectionDisplay').addClass('animated rubberBand');
 
-        		vm.projectedFinal = calculatorService.getProjection();
-        		angular.element('#projectionDisplay').addClass('animated rubberBand');
+                // Do not animate level average and previous level if this is a death.
+                if (vm.inputScore.indexOf('d') === -1) {
 
-        		// Do not animate level average and previous level if this is a death.
-        		if (vm.inputScore.indexOf('d') === -1) {
+                    vm.levelAverage = calculatorService.getLevelAverage();
+                    angular.element('#levelAverageDisplay').addClass('animated rubberBand');
 
-        			vm.levelAverage = calculatorService.getLevelAverage();
-        			angular.element('#levelAverageDisplay').addClass('animated rubberBand');
+                    vm.previousLevel = calculatorService.getPreviousLevel();
+                    angular.element('#previousLevelDisplay').addClass('animated rubberBand');
 
-        			vm.previousLevel = calculatorService.getPreviousLevel();
-        			angular.element('#previousLevelDisplay').addClass('animated rubberBand');
+                }
 
-        		}
+            }
 
-        	}
+            var currentLevel = calculatorService.getCurrentLevel();
+            vm.inputScoreLabel = 'Input L' + currentLevel + ' Score or Death';
 
-        	// Remove all animation classes so we can show them again later.
-    		$timeout(function() {
+            // Remove all animation classes so we can show them again later.
+            $timeout(function() {
 
-    			angular.element('#levelAverageDisplay').removeClass('animated rubberBand');
-    			angular.element('#neededAverageDisplay').removeClass('animated rubberBand');
-    			angular.element('#previousLevelDisplay').removeClass('animated rubberBand');
-    			angular.element('#projectionDisplay').removeClass('animated rubberBand');
+                angular.element('#levelAverageDisplay').removeClass('animated rubberBand');
+                angular.element('#neededAverageDisplay').removeClass('animated rubberBand');
+                angular.element('#previousLevelDisplay').removeClass('animated rubberBand');
+                angular.element('#projectionDisplay').removeClass('animated rubberBand');
 
-    		}, 2000);
+            }, 2000);
 
         }
 
         function resetCalculator() {
 
-        	setInitialVariables();
-        	calculatorService.resetServiceVariables();
+            setInitialVariables();
+            calculatorService.resetServiceVariables();
 
         }
 
         function setInitialVariables() {
 
-        	vm.start = null;
-	        vm.levelAverage = null;
-	        vm.neededAverage = null;
-	        vm.previousLevel = null;
-	        vm.projectedFinal = null;
+            vm.start = null;
+            vm.levelAverage = null;
+            vm.neededAverage = null;
+            vm.previousLevel = null;
+            vm.projectedFinal = null;
 
-	        vm.inputScoreLabel = 'Input Start Score';
+            vm.inputScoreLabel = 'Input Start Score';
 
         }
 
         function submitScore() {
 
-        	calculatorService.submitScore(vm.inputScore, vm.inputGoal);
+            calculatorService.submitScore(vm.inputScore, vm.inputGoal);
 
-        	refreshView();
+            refreshView();
 
-        	vm.inputScore = null;
+            vm.inputScore = null;
 
         }
 
