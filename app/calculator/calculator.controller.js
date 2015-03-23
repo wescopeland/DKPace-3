@@ -3,7 +3,10 @@
 
     angular
         .module('DKPace')
-        .controller('Calculator', Calculator);
+        .controller('Calculator', Calculator)
+        .element(document).ready(function() {
+            angular.element('.tooltipped').tooltip( {delay: 0} );
+        });
 
     /* @ngInject */
     function Calculator(calculatorService, $timeout) {
