@@ -18,6 +18,7 @@
         vm.refreshView = refreshView;
         vm.resetCalculator = resetCalculator;
         vm.setInitialVariables = setInitialVariables;
+        vm.submitQuickDeath = submitQuickDeath;
         vm.submitScore = submitScore;
 
         ////////////////
@@ -60,6 +61,7 @@
             // Remove all animation classes so we can show them again later.
             $timeout(function() {
 
+                angular.element('#startDisplay').removeClass('animated rubberBand');
                 angular.element('#levelAverageDisplay').removeClass('animated rubberBand');
                 angular.element('#neededAverageDisplay').removeClass('animated rubberBand');
                 angular.element('#previousLevelDisplay').removeClass('animated rubberBand');
@@ -85,6 +87,16 @@
             vm.projectedFinal = null;
 
             vm.inputScoreLabel = 'Input Start Score';
+
+        }
+
+        function submitQuickDeath(inputDeathPoints) {
+
+            calculatorService.submitQuickDeath(inputDeathPoints, vm.inputGoal);
+
+            refreshView();
+
+            angular.element('#inputScore').focus();
 
         }
 

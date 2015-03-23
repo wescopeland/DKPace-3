@@ -83,6 +83,42 @@
 			</form>
 		</div>
 
+		<!-- Quick Death Buttons -->
+		<div class="row">
+			<div class="col s12">
+				<div class="col s4" style="text-align: center;">
+					<a class="red darken-1 btn-floating waves-effect waves-light 
+					          z-depth-2 tooltipped" 
+					   data-position="bottom" 
+					   data-delay="250"
+					   data-tooltip="Death (< 2,000)"
+					   ng-click="calculator.submitQuickDeath(1.6)">
+					   S
+					</a>
+				</div>
+				<div class="col s4" style="text-align: center;">
+					<a class="red darken-1 btn-floating waves-effect waves-light 
+					          z-depth-2 tooltipped" 
+					   data-position="bottom"
+					   data-delay="250"
+					   data-tooltip="Medium Death (2,000 - 6,000)"
+					   ng-click="calculator.submitQuickDeath(4)">
+					   M
+					</a>
+				</div>
+				<div class="col s4" style="text-align: center;">
+					<a class="red darken-1 btn-floating waves-effect waves-light 
+					          z-depth-2 tooltipped" 
+					   data-position="top"
+					   data-delay="250"
+					   data-tooltip="Large Death (6,000+)"
+					   ng-click="calculator.submitQuickDeath(8.5)">
+					   L
+					</a>
+				</div>
+			</div>
+		</div>
+
 		<!-- Calculator Buttons -->
 		<div class="row">
 			<div class="col s12">

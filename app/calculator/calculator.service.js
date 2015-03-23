@@ -30,6 +30,7 @@
         this.getStart = getStart;
         this.isStart = isStart;
         this.resetServiceVariables = resetServiceVariables;
+        this.submitQuickDeath = submitQuickDeath;
         this.submitScore = submitScore;
 
         ////////////////
@@ -154,6 +155,19 @@
             _projectionChange = null;
             _scores = [];
             _startScore = null;
+        }
+
+        function submitQuickDeath(inputDeathPoints, inputGoal) {
+
+            var conversionReturn = convertShorthandNumber(inputDeathPoints + 'd');
+            var score = conversionReturn[0];
+            var isDeath = conversionReturn[1];
+
+            _deaths.push(score);
+            _levelDeathSum += score;
+            calculateNeededAverage(inputGoal);
+            calculateProjection();
+
         }
 
         function submitScore(inputScore, inputGoal) {
