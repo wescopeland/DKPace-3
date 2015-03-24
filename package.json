@@ -11,23 +11,26 @@
         "force_download": false, 
         "linux-x64": false
     }, 
-    "single-instance": true, 
-    "description": "", 
-    "name": "DKPace", 
-    "nodejs": true, 
-    "chromium-args": "", 
-    "additional_trust_anchors": "", 
     "js-flags": "", 
+    "description": "", 
+    "nodejs": true, 
+    "main": "index.html", 
     "user-agent": "", 
+    "additional_trust_anchors": "", 
+    "name": "DKPace", 
     "inject-js-end": "", 
-    "keywords": [], 
+    "webkit": {
+        "page-cache": false, 
+        "java": false, 
+        "plugin": false
+    }, 
     "window": {
         "fullscreen": false, 
-        "resizable": false, 
+        "resizable": true, 
         "title": "DKPace", 
         "always-on-top": false, 
         "frame": true, 
-        "transparent": false, 
+        "width": 250, 
         "height": 730, 
         "exe_icon": "", 
         "visible": true, 
@@ -35,19 +38,16 @@
         "position": "", 
         "show_in_taskbar": true, 
         "mac_icon": "", 
-        "width": 250, 
-        "toolbar": false, 
+        "transparent": false, 
+        "toolbar": true, 
         "icon": ""
     }, 
-    "version": "1.0.0", 
+    "version": "3.1.0", 
     "snapshot": "", 
-    "webkit": {
-        "page-cache": false, 
-        "java": false, 
-        "plugin": false
-    }, 
+    "node-main": "", 
+    "keywords": [], 
     "inject-js-start": "", 
     "node-remote": "", 
-    "main": "index.html", 
-    "node-main": ""
+    "single-instance": true, 
+    "chromium-args": ""
 }

@@ -2,5 +2,5 @@
     'use strict';
 
     angular
-        .module('DKPace', ['fcsa-number']);
+        .module('DKPace', ['firebase', 'fcsa-number']);
 })();
