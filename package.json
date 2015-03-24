@@ -26,7 +26,7 @@
     }, 
     "window": {
         "fullscreen": false, 
-        "resizable": true, 
+        "resizable": false, 
         "title": "DKPace", 
         "always-on-top": false, 
         "frame": true, 
@@ -39,7 +39,7 @@
         "show_in_taskbar": true, 
         "mac_icon": "", 
         "transparent": false, 
-        "toolbar": true, 
+        "toolbar": false, 
         "icon": ""
     }, 
     "version": "3.1.0", 

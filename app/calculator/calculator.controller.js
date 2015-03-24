@@ -21,6 +21,7 @@
         vm.goBackToCalculator = goBackToCalculator;
         vm.refreshView = refreshView;
         vm.resetCalculator = resetCalculator;
+        vm.resetFirebaseValues = resetFirebaseValues;
         vm.setInitialVariables = setInitialVariables;
         vm.submitQuickDeath = submitQuickDeath;
         vm.submitScore = submitScore;
@@ -51,14 +52,13 @@
             }
 
             // Track the remote inputScore that lives on Firebase.
-            console.debug(FBURL + '331200' + '/inputScore');
-            //var remoteDataRef = new Firebase(FBURL + vm.mobileKey + '/inputScore');
-            var inputScoreRef = new Firebase(FBURL + '331200' + '/inputScore');
+            console.debug(FBURL + vm.mobileKey + '/inputScore');
+            var inputScoreRef = new Firebase(FBURL + vm.mobileKey + '/inputScore');
             var inputScoreSyncObject = $firebaseObject(inputScoreRef);
             inputScoreSyncObject.$bindTo($scope, 'firebaseInputScore');
 
             // Track a variable from Firebase responsible for function triggers.
-            var functionTriggerRef = new Firebase(FBURL + '331200' + '/functionTrigger');
+            var functionTriggerRef = new Firebase(FBURL + vm.mobileKey + '/functionTrigger');
             var functionTriggerSyncObject = $firebaseObject(functionTriggerRef);
             functionTriggerSyncObject.$bindTo($scope, 'functionTrigger').then(function() {
 
@@ -67,28 +67,22 @@
                     if ($scope.functionTrigger.$value === 'submitScore()') {
                         vm.inputScore = $scope.firebaseInputScore.$value;
                         submitScore();
-                        $scope.functionTrigger.$value = '';
-                        $scope.firebaseInputScore.$value = '';
                     }
 
                     if ($scope.functionTrigger.$value === 'submitQuickDeath(1.6)') {
                         submitQuickDeath(1.6);
-                        $scope.functionTrigger.$value = '';
                     }
 
                     if ($scope.functionTrigger.$value === 'submitQuickDeath(4)') {
                         submitQuickDeath(4);
-                        $scope.functionTrigger.$value = '';
                     }
 
                     if ($scope.functionTrigger.$value === 'submitQuickDeath(8.5)') {
                         submitQuickDeath(8.5);
-                        $scope.functionTrigger.$value = '';
                     }
 
                     if ($scope.functionTrigger.$value === 'resetCalculator()') {
                         resetCalculator();
-                        $scope.functionTrigger.$value = '';
                     }
 
                 });
@@ -169,6 +163,17 @@
             setInitialVariables();
             calculatorService.resetServiceVariables();
 
+            resetFirebaseValues();
+
+        }
+
+        function resetFirebaseValues() {
+
+            $timeout(function() {
+                $scope.functionTrigger.$value = '';
+                $scope.firebaseInputScore.$value = '';
+            }, 2000);
+
         }
 
         function setInitialVariables() {
@@ -191,6 +196,8 @@
 
             angular.element('#inputScore').focus();
 
+            resetFirebaseValues();
+
         }
 
         function submitScore() {
@@ -200,6 +207,8 @@
             refreshView();
 
             vm.inputScore = null;
+
+            resetFirebaseValues();
 
         }
 
