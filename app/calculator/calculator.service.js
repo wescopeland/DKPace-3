@@ -6,7 +6,7 @@
         .service('calculatorService', calculatorService);
 
     /* @ngInject */
-    function calculatorService() {
+    function calculatorService($rootScope) {
 
         var _deaths = [];
         var _levelAverage = null;
@@ -146,6 +146,7 @@
         }
 
         function resetServiceVariables() {
+
             _deaths = [];
             _levelAverage = null;
             _levels = [];
@@ -155,6 +156,7 @@
             _projectionChange = null;
             _scores = [];
             _startScore = null;
+
         }
 
         function submitQuickDeath(inputDeathPoints, inputGoal) {
@@ -172,7 +174,7 @@
 
         function submitScore(inputScore, inputGoal) {
 
-            var conversionReturn = convertShorthandNumber(inputScore);
+            var conversionReturn = convertShorthandNumber(String(inputScore));
             var score = conversionReturn[0]
             var isDeath = conversionReturn[1];
 
