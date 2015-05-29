@@ -1,32 +1,10 @@
 # DKPace 3
 
-### Setting up your project
-#### 1.
-Ensure you have all the project's dependencies installed. You will need Node.js and NW.js.
+A pace calculator intended to give live metrics to arcade and MAME Donkey Kong players as they progress through their game.  The metrics given adapt based on the player's goal.
 
-* Node.js: https://nodejs.org/
-* NW.js: http://nwjs.io/
+<img src="http://i.imgur.com/hVCWATa.png" width="50%" height="50%">
 
-Once Node.js is installed, from your terminal run the command:
-
-<code>npm install -g bower</code>
-
-This will install bower, the front-end package manager used by DKPace 3.
-
-#### 2.
-Clone the repo to your computer and open its directory with your terminal application. Run the command:
-
-<code>bower install</code>
-
-#### 3.
-Extract the contents of your NW.js download to the project's working directory.
-
-#### 4.
-You should now be able to open nw.exe or nwjs.app and the application will launch.
-
-### Frameworks Used
-
-* AngularJS: https://angularjs.org/
-* johnpapa's Angular Style Guide: https://github.com/johnpapa/angular-styleguide
-* NW.js: https://github.com/nwjs/nw.js/
-* Materialize.css: http://materializecss.com/
+## Setup
+1. `bower install`
+2. Download [NW.js](http://nwjs.io/) and extract its contents to your project's working directory.
+3. Open nw.exe or nwjs.app.
