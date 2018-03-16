@@ -9,6 +9,7 @@
     function calculatorService($rootScope) {
 
         var _deaths = [];
+        var _goal = null;
         var _levelAverage = null;
         var _levels = [];
         var _levelDeathSum = 0;
@@ -23,14 +24,15 @@
         this.calculateProjection = calculateProjection;
         this.convertShorthandNumber = convertShorthandNumber;
         this.getCurrentLevel = getCurrentLevel;
+        this.getDeathPoints = getDeathPoints;
         this.getLevelAverage = getLevelAverage;
         this.getNeededAverage = getNeededAverage;
         this.getPreviousLevel = getPreviousLevel;
         this.getProjection = getProjection;
         this.getStart = getStart;
+        this.getTargetScore = getTargetScore;
         this.isStart = isStart;
         this.resetServiceVariables = resetServiceVariables;
-        this.submitQuickDeath = submitQuickDeath;
         this.submitScore = submitScore;
 
         ////////////////
@@ -59,6 +61,10 @@
                 deathSum += _deaths[i];
             }
 
+            if (deathSum < 28000) {
+                deathSum = 28000;
+            }
+
             var unroundedNeededAverage = ((inputGoal - _startScore) - levelSum - deathSum) / (17 - _levels.length);
 
             _neededAverage = Math.round(unroundedNeededAverage / 100) * 100;
@@ -74,6 +80,10 @@
             var deathSum = 0;
             for (var i = 0; i < _deaths.length; i++) {
                 deathSum += _deaths[i];
+            }
+
+            if (deathSum < 28000) {
+                deathSum = 28000;
             }
 
             calculateLevelAverage();
@@ -121,6 +131,17 @@
             return _scores.length + 5;
         }
 
+        function getDeathPoints() {
+
+            let deathPoints = 0;
+            if (_deaths) {
+                deathPoints = _deaths.reduce((a, b) => a + b, 0);
+            }
+
+            return deathPoints;
+
+        }
+
         function getLevelAverage() {
             return _levelAverage;
         }
@@ -141,6 +162,18 @@
             return _startScore;
         }
 
+        function getTargetScore() {
+
+            let deathPoints = getDeathPoints();
+
+            if (!_scores.length) {
+                return _neededAverage + _startScore + deathPoints;
+            }
+
+            return _neededAverage + _scores[_scores.length - 1];
+
+        }
+
         function isStart() {
             return ( _scores.length === 0 ? true : false );
         }
@@ -159,20 +192,9 @@
 
         }
 
-        function submitQuickDeath(inputDeathPoints, inputGoal) {
-
-            var conversionReturn = convertShorthandNumber(inputDeathPoints + 'd');
-            var score = conversionReturn[0];
-            var isDeath = conversionReturn[1];
-
-            _deaths.push(score);
-            _levelDeathSum += score;
-            calculateNeededAverage(inputGoal);
-            calculateProjection();
-
-        }
-
         function submitScore(inputScore, inputGoal) {
+
+            _goal = inputGoal;
 
             var conversionReturn = convertShorthandNumber(String(inputScore));
             var score = conversionReturn[0]

@@ -4,26 +4,19 @@
     angular
         .module('DKPace')
         .controller('Calculator', Calculator)
-        .element(document).ready(function() {
-            angular.element('.tooltipped').tooltip( {delay: 0} );
-        });
 
-    function Calculator($scope, calculatorService, $firebaseObject, $timeout) {
+    function Calculator($scope, calculatorService, $timeout) {
 
         var vm = this;
 
         vm.configuringMobile = false;
-        vm.inputGoal = 1100000;
+        vm.inputGoal = 1247700;
         vm.mobileKey = null;
 
         vm.configureMobile = configureMobile;
-        vm.generateMobileKey = generateMobileKey;
-        vm.goBackToCalculator = goBackToCalculator;
         vm.refreshView = refreshView;
         vm.resetCalculator = resetCalculator;
-        vm.resetFirebaseValues = resetFirebaseValues;
         vm.setInitialVariables = setInitialVariables;
-        vm.submitQuickDeath = submitQuickDeath;
         vm.submitScore = submitScore;
 
         ////////////////
@@ -36,76 +29,6 @@
             $timeout(function() {
                 vm.configuringMobile = true;
                 angular.element('#calculatorUI').removeClass('animated fadeOutLeft');
-                angular.element('#mobileConfigUI').addClass('animated fadeInRight');
-            }, 750);
-
-        }
-
-        function generateMobileKey() {
-
-            var FBURL = 'https://dkpace.firebaseio.com/';
-
-            // Generate a six character numeric key.
-            vm.mobileKey = '';
-            for (vm.mobileKey; vm.mobileKey.length < 6;) {
-                vm.mobileKey += Math.random().toString(5).substr(2, 1);
-            }
-
-            // Track the remote inputScore that lives on Firebase.
-            console.debug(FBURL + vm.mobileKey + '/inputScore');
-            var inputScoreRef = new Firebase(FBURL + vm.mobileKey + '/inputScore');
-            var inputScoreSyncObject = $firebaseObject(inputScoreRef);
-            inputScoreSyncObject.$bindTo($scope, 'firebaseInputScore');
-
-            // Track a variable from Firebase responsible for function triggers.
-            var functionTriggerRef = new Firebase(FBURL + vm.mobileKey + '/functionTrigger');
-            var functionTriggerSyncObject = $firebaseObject(functionTriggerRef);
-            functionTriggerSyncObject.$bindTo($scope, 'functionTrigger').then(function() {
-
-                functionTriggerSyncObject.$watch(function() {
-
-                    if ($scope.functionTrigger.$value === 'submitScore()') {
-                        vm.inputScore = $scope.firebaseInputScore.$value;
-                        submitScore();
-                    }
-
-                    if ($scope.functionTrigger.$value === 'submitQuickDeath(1.6)') {
-                        submitQuickDeath(1.6);
-                    }
-
-                    if ($scope.functionTrigger.$value === 'submitQuickDeath(4)') {
-                        submitQuickDeath(4);
-                    }
-
-                    if ($scope.functionTrigger.$value === 'submitQuickDeath(8.5)') {
-                        submitQuickDeath(8.5);
-                    }
-
-                    if ($scope.functionTrigger.$value === 'resetCalculator()') {
-                        resetCalculator();
-                    }
-
-                });
-
-            });
-
-            angular.element('#inputScore').focus();
-            vm.keySuccess = true;
-            //vm.configuringMobile = false;
-
-            angular.element('#mobileConfigSuccess').addClass('animated bounceInUp');
-
-        }
-
-        function goBackToCalculator() {
-
-            // Hide the mobile config UI and show the calculator UI.
-            angular.element('#mobileConfigUI').addClass('fadeOutRight');
-
-            $timeout(function() {
-                vm.configuringMobile = false;
-                angular.element('#mobileConfigUI').removeClass('animated fadeOutRight');
-                angular.element('#calculatorUI').addClass('animated fadeInLeft');
             }, 750);
 
         }
@@ -142,8 +65,11 @@
 
             }
 
-            var currentLevel = calculatorService.getCurrentLevel();
-            vm.inputScoreLabel = 'Input L' + currentLevel + ' Score or Death';
+            vm.currentLevel = calculatorService.getCurrentLevel();
+            vm.deathPoints = calculatorService.getDeathPoints();
+            vm.targetScore = calculatorService.getTargetScore();
+
+            vm.inputScoreLabel = 'Input L' + vm.currentLevel + ' Score or Death';
 
             // Remove all animation classes so we can show them again later.
             $timeout(function() {
@@ -163,17 +89,6 @@
             setInitialVariables();
             calculatorService.resetServiceVariables();
 
-            resetFirebaseValues();
-
-        }
-
-        function resetFirebaseValues() {
-
-            $timeout(function() {
-                $scope.functionTrigger.$value = '';
-                $scope.firebaseInputScore.$value = '';
-            }, 2000);
-
         }
 
         function setInitialVariables() {
@@ -183,20 +98,11 @@
             vm.neededAverage = null;
             vm.previousLevel = null;
             vm.projectedFinal = null;
+            vm.deathPoints = null;
+            vm.targetScore = null;
+            vm.currentLevel = null;
 
             vm.inputScoreLabel = 'Input Start Score';
-
-        }
-
-        function submitQuickDeath(inputDeathPoints) {
-
-            calculatorService.submitQuickDeath(inputDeathPoints, vm.inputGoal);
-
-            refreshView();
-
-            angular.element('#inputScore').focus();
-
-            resetFirebaseValues();
 
         }
 
@@ -207,8 +113,6 @@
             refreshView();
 
             vm.inputScore = null;
-
-            resetFirebaseValues();
 
         }
 

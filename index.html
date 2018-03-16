@@ -20,12 +20,12 @@
 			<!-- Display Fields -->
 			<ul class="collection">
 				<li class="collection-item" style="border-top: none;">
-					<span class="item-header">Start (L1 &ndash; L4)</span>
+					<span class="item-header">Start (L=01 &ndash; L=04)</span>
 					<span id="startDisplay" class="item-content">{{ (calculator.start | number) || "-" }}</span>
 				</li>
 
 				<li class="collection-item">
-					<span class="item-header">Level Average (L5 &ndash; L21)</span>
+					<span class="item-header">Level Average (L=05 &ndash; L=21)</span>
 					<span id="levelAverageDisplay" 
 					      class="item-content"
 					      ng-class="{ 'less-than-needed': calculator.levelAverage && calculator.levelAverage < calculator.neededAverage,
@@ -36,8 +36,13 @@
 				</li>
 
 				<li class="collection-item">
-					<span class="item-header">Needed Average For Goal</span>
+					<span class="item-header">Needed L=05+ Average</span>
 					<span id="neededAverageDisplay" class="item-content">{{ (calculator.neededAverage | number) || "-" }}</span>
+				</li>
+
+				<li class="collection-item">
+					<span class="item-header">Target End of Level Score</span>
+					<span id="targetScoreDisplay" class="item-content">{{ (calculator.targetScore | number) || "Waiting to enter L=05..." }}</span>
 				</li>
 
 				<li class="collection-item">
@@ -46,13 +51,23 @@
 				</li>
 
 				<li class="collection-item">
-					<span class="item-header">Projected L22 Final Score</span>
+					<span class="item-header">Current Pace</span>
 					<span id="projectionDisplay" 
 					      class="item-content"
 					      ng-class="{ 'less-than-needed': calculator.projectedFinal && calculator.projectedFinal < calculator.inputGoal,
 					                  'more-than-needed': calculator.projectedFinal && calculator.projectedFinal > calculator.inputGoal,
 					                  'needed-value': calculator.projectedFinal && calculator.projectedFinal === calculator.inputGoal }">
 					    {{ (calculator.projectedFinal | number) || "-" }}
+					</span>
+				</li>
+
+				<li class="collection-item">
+					<span class="item-header">Death Points</span>
+					<span id="deathsDisplay" 
+					      class="item-content" 
+					      ng-class="{ 'less-than-needed': calculator.deathPoints < 28000 && calculator.start,
+					                  'more-than-needed': calculator.deathPoints >= 28000 && calculator.start }">
+						{{ (calculator.deathPoints | number) || "-" }} / 28,000
 					</span>
 				</li>
 
@@ -83,149 +98,29 @@
 				</form>
 			</div>
 
-			<!-- Quick Death Buttons -->
-			<div class="row">
-				<div class="col s12">
-					<div class="col s4" style="text-align: center;">
-						<a class="red darken-1 btn-floating waves-effect waves-light 
-						          z-depth-2 tooltipped" 
-						   data-position="bottom" 
-						   data-delay="250"
-						   data-tooltip="Death (< 2,000)"
-						   ng-click="calculator.submitQuickDeath(1.6)">
-						   S
-						</a>
-					</div>
-					<div class="col s4" style="text-align: center;">
-						<a class="red darken-1 btn-floating waves-effect waves-light 
-						          z-depth-2 tooltipped" 
-						   data-position="bottom"
-						   data-delay="250"
-						   data-tooltip="Medium Death (2,000 - 6,000)"
-						   ng-click="calculator.submitQuickDeath(4)">
-						   M
-						</a>
-					</div>
-					<div class="col s4" style="text-align: center;">
-						<a class="red darken-1 btn-floating waves-effect waves-light 
-						          z-depth-2 tooltipped" 
-						   data-position="top"
-						   data-delay="250"
-						   data-tooltip="Large Death (6,000+)"
-						   ng-click="calculator.submitQuickDeath(8.5)">
-						   L
-						</a>
-					</div>
-				</div>
-			</div>
-
 			<!-- Calculator Function Buttons -->
 			<div class="row">
 				<div class="col s12">
 					<div class="row">
-						<div class="col s4" style="text-align: center;">
-							<a class="green darken-1 btn-floating waves-effect waves-light 
-							          z-depth-2 tooltipped" 
+						<div class="col s6" style="text-align: center;">
+							<a class="waves-effect waves-light btn green" 
 							   data-position="top" 
 							   data-delay="250"
 							   data-tooltip="Submit"
 							   ng-click="calculator.submitScore()">
-							    <i class="mdi-action-done"></i>
+							    Submit
 							</a>
 						</div>
-						<div class="col s4" style="text-align: center;">
-							<a class="blue darken-1 btn-floating waves-effect waves-light 
-							          z-depth-2 tooltipped" 
+						<div class="col s6" style="text-align: center;">
+							<a class="waves-effect waves-light btn red" 
 							   data-position="top"
 							   data-delay="250"
 							   data-tooltip="Reset"
 							   ng-click="calculator.resetCalculator()">
-							    <i class="mdi-navigation-refresh"></i>
-							</a>
-						</div>
-						<div class="col s4" style="text-align: center;">
-							<a id="mobileConfigButton" 
-							   class="purple darken-1 btn-floating waves-effect waves-light 
-							          z-depth-2 tooltipped" 
-							   data-position="top"
-							   data-delay="250"
-							   data-tooltip="Mobile Config"
-							   ng-click="calculator.configureMobile()">
-							    <i class="mdi-device-devices"></i>
+							    Reset
 							</a>
 						</div>
 					</div>
-				</div>
-			</div>
-
-		</div>
-
-		<div id="mobileConfigUI" ng-hide="!calculator.configuringMobile">
-
-			<!-- Log In / Registration Form -->
-			<div class="row">
-				<div class="col s12">
-
-					<div class="section">
-						<h5 class="white-text">Generate Mobile Key</h5>
-						<p class="white-text">
-							We'll give you a randomly generated key that
-							will let your phone talk to DKPace.
-						</p>
-					</div>
-
-					<button class="green btn waves-effect waves-light" 
-					        name="action" 
-					        ng-click="calculator.generateMobileKey()"
-					        style="display: block; margin-left: auto; margin-right: auto;">
-					    Generate
-						<i class="mdi-communication-vpn-key right"></i>
-					</button>
-
-					<button class="blue btn waves-effect waves-light" 
-					        name="action" 
-					        ng-click="calculator.goBackToCalculator()"
-					        style="display: block; margin-left: auto; margin-right: auto;">
-					    Go Back
-						<i class="mdi-content-undo left"></i>
-					</button>
-
-				</div>
-			</div>
-
-			<!-- Success Indicator -->
-			<div id="mobileConfigSuccess" class="row" ng-show="calculator.keySuccess">
-				<div class="col s12">
-					<div style="text-align: center;">
-						<h5 class="white-text">{{ calculator.mobileKey }}</h5>
-						<i class="light-green-text mdi-action-favorite-outline large"></i>
-						<h5 class="light-green-text">Awesome!</h5>
-					</div>
-				</div>
-
-				<div class="col s12">
-					<p class="light-green-text">
-						DKPace is now ready to listen to input from your phone!
-						On your phone, go to dkpace.herokuapp.com and enter the
-						above code and you'll be ready to go!
-					</p>
-				</div>
-			</div>
-
-			<!-- Failure Indicator -->
-			<div class="row" ng-show="calculator.keyFailure">
-				<div class="col s12">
-					<div style="text-align: center;">
-						<i class="red-text mdi-action-highlight-remove large"></i>
-						<h5 class="red-text">:(</h5>
-					</div>
-				</div>
-
-				<div class="col s12">
-					<p class="red-text">
-						There was a problem connecting to the DKPace server.
-						Are you sure your internet connection is working properly?
-					</p>
 				</div>
 			</div>
 
