@@ -16,6 +16,10 @@
   ],
   "dependencies": {
     "angularfire": "~1.0.0",
-    "firebase": "~2.2.3"
+    "firebase": "~2.2.3",
+    "materialize": "^1.0.0",
+    "animate.css": "^3.7.0",
+    "jquery": "^3.4.1",
+    "angular-fcsa-number": "^1.5.3"
   }
 }
